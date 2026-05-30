@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+:root {
+
+    /* Primary Brand Color */
+    --primary: #e84d8a;
+
+    /* Darker Hover Version */
+    --primary-dark: #c73a72;
+
+    /* Glow Effect */
+    --primary-glow: rgba(232, 77, 138, 0.45);
+
+
+    /* Gradient Colors */
+    --primary-gradient-1: #ff4da6;
+    --primary-gradient-2: #e84d8a;
+
+    /* Backgrounds */
+    --bg-primary: #05060a;
+    --bg-secondary: #0d0e13;
+
+    /* SOFT PRIMARY BACKGROUND */
+    --primary-soft: rgba(232, 77, 138, 0.15);
+
+    /* Text */
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+
+    /* Borders */
+    --border-soft: rgba(232, 77, 138, 0.25);
+
+    /* NAVBAR GLASS BACKGROUND */
+    --navbar-bg: rgba(5, 6, 10, 0.6);
+
+    /* LOADER EMPTY BAR */
+    --loader-empty: #1a1d25;
+
+    /* BUTTON HOVER GRADIENT */
+    --primary-hover-1: #f43f94;
+    --primary-hover-2: #d9467c;
+
+    /* BUTTON ACTIVE SHADOW */
+    --press-shadow: rgba(0, 0, 0, 0.35);
+
+    /* HERO IMAGE ACCENT */
+    --hero-border: #e84d8a;
+
+    --hero-glow: rgba(232, 77, 138, 0.45);
+
+}
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+@keyframes loaderFill {
+
+    from {
+
+        width: 0%;
+
+    }
+
+    to {
+
+        width: 100%;
+
+    }
+
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translate(-50%, 0); }
+  50% { transform: translate(-50%, 10px); }
+}
+
+@keyframes blink {
+
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+
+}
+
+/* ========================================
+   REVEAL ANIMATION
+======================================== */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+}
+
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* * {
+  outline: 1px solid red;
+} */
