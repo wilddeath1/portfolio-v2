@@ -80,7 +80,7 @@ my-portfolio/
 
 │ ├── components/
 
-│ │ ├── layout/
+│ │ ├── layouts/
 
 │ │ └── ui/
 
