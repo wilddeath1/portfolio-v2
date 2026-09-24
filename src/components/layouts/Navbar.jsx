@@ -117,7 +117,7 @@ const handleScroll = () => {
                 top-0
                 left-0
                 w-full
-                z-999
+                z-50
                 backdrop-blur-md
                 bg-(--navbar-bg)
                 

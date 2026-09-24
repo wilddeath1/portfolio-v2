@@ -12,7 +12,7 @@ function App() {
   useReveal();
   return (
     <>
-      <Loader />
+      
       <Navbar />
       <Hero />
       <About />

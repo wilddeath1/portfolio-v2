@@ -1,298 +1,251 @@
-import React, {
+import {
     useState,
     useEffect,
-    useRef
+    useRef,
 } from "react";
 
-import { motion } from "framer-motion";
+import {
+    Swiper,
+    SwiperSlide,
+} from "swiper/react";
+
+import {
+    EffectCoverflow,
+    Navigation,
+    Pagination,
+} from "swiper/modules";
+
+import {
+    ChevronLeft,
+    ChevronRight,
+} from "lucide-react";
+
 import projectsData from "./projectsData";
 import ProjectCard from "./ProjectCard";
+import ProjectViewer from "./ProjectViewer";
 
-
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const ProjectsSlider = () => {
+    const [selectedProject, setSelectedProject] =
+        useState(null);
 
-    const [activeIndex, setActiveIndex] = useState(2);
-    const isAnimating = useRef(false);
-    const sliderRef = useRef(null);
-    const nextSlide = () => {
-
-        if (isAnimating.current) return;
-
-        isAnimating.current = true;
-
-        setActiveIndex(
-            (prev) => (prev + 1) % projectsData.length
-        );
-
-        setTimeout(() => {
-
-            isAnimating.current = false;
-
-        }, 600);
-
-    };
-
-    const prevSlide = () => {
-
-        if (isAnimating.current) return;
-
-        isAnimating.current = true;
-
-        setActiveIndex(
-            (prev) =>
-                prev === 0
-                    ? projectsData.length - 1
-                    : prev - 1
-        );
-
-        setTimeout(() => {
-
-            isAnimating.current = false;
-
-        }, 600);
-
-    };
+    const swiperRef = useRef(null);
 
     useEffect(() => {
-
         const handleWheel = (e) => {
+            // Ignore mouse-wheel events inside the project viewer.
+            if (
+                e.target instanceof Element &&
+                e.target.closest("[data-project-viewer]")
+            ) {
+                return;
+            }
 
-            if (Math.abs(e.deltaY) >
-                Math.abs(e.deltaX)) {
+            if (selectedProject) return;
 
+            if (
+                Math.abs(e.deltaY) >
+                Math.abs(e.deltaX)
+            ) {
                 e.preventDefault();
 
                 if (e.deltaY > 0) {
-
-                    nextSlide();
-
+                    swiperRef.current?.slideNext();
+                } else {
+                    swiperRef.current?.slidePrev();
                 }
-
-                else {
-
-                    prevSlide();
-
-                }
-
             }
-
         };
 
-        sliderRef.current?.addEventListener(
+        const sliderElement =
+            swiperRef.current?.el;
+
+        sliderElement?.addEventListener(
             "wheel",
             handleWheel,
             { passive: false }
         );
 
         return () => {
-
-            sliderRef.current?.removeEventListener(
+            sliderElement?.removeEventListener(
                 "wheel",
                 handleWheel
             );
-
         };
+    }, [selectedProject]);
 
-    }, []);
-
-    const getPosition = (index) => {
-
-        const diff =
-            (index - activeIndex + projectsData.length)
-            % projectsData.length;
-
-        if (diff === 0) return "center";
-
-        if (diff === 1) return "right";
-
-        if (diff === 2) return "farRight";
-
-        if (diff === 4) return "left";
-
-        if (diff === 3) return "farLeft";
-
-    };
-
-    const isMobile = window.innerWidth < 768;
-
-    const positionStyles = {
-
-        center: {
-            x: 0,
-            scale: 1,
-            opacity: 1,
-            zIndex: 5,
-        },
-
-        left: {
-            x: isMobile ? -140 : -420,
-            scale: 0.82,
-            opacity: 0.4,
-            zIndex: 3,
-        },
-
-        farLeft: {
-            x: isMobile ? -220 : -760,
-            scale: 0.65,
-            opacity: 0.08,
-            zIndex: 1,
-        },
-
-        right: {
-            x: isMobile ? 140 : 420,
-            scale: 0.82,
-            opacity: 0.4,
-            zIndex: 3,
-        },
-
-        farRight: {
-            x: isMobile ? 220 : 760,
-            scale: 0.65,
-            opacity: 0.08,
-            zIndex: 1,
-        },
-
-    };
     return (
-        <div id="outer-container" className="h-135 w-full flex items-center justify-center">
-            <div id="scroll-area-container"
-                ref={sliderRef}
+        <div
+            id="outer-container"
+            className="
+                flex
+                h-135
+                w-full
+                items-center
+                justify-center
+            "
+        >
+            <div
+                id="scroll-area-container"
                 className="
-        relative
-        h-105 w-190
-        flex
-        items-center
-        justify-center
-        overflow-visible"
+                    relative
+                    flex
+                    h-105
+                    w-full
+                    items-center
+                    justify-center
+                    overflow-visible
+                "
             >
+                <ProjectViewer
+                    selectedProject={selectedProject}
+                    setSelectedProject={setSelectedProject}
+                />
 
-                {/* LEFT BUTTON */}
-
-                <button
-                    onClick={prevSlide}
-
+                <Swiper
+                    onSwiper={(swiper) => {
+                        swiperRef.current = swiper;
+                    }}
+                    effect="coverflow"
+                    grabCursor={true}
+                    centeredSlides={true}
+                    loop={true}
+                    slidesPerView="auto"
+                    coverflowEffect={{
+                        rotate: 0,
+                        stretch: 0,
+                        depth: 100,
+                        modifier: 2.5,
+                    }}
+                    navigation={{
+                        prevEl: ".projects-swiper-prev",
+                        nextEl: ".projects-swiper-next",
+                    }}
+                    pagination={{
+                        el: ".projects-swiper-pagination",
+                        clickable: true,
+                    }}
+                    modules={[
+                        EffectCoverflow,
+                        Navigation,
+                        Pagination,
+                    ]}
                     className="
-                    md:hidden
-text-white
-                    absolute
-                    left-2
-                    z-50
-
-                    w-10
-                    h-10
-
-                    rounded-full
-
-                    border
-                    border-white/10
-
-                    bg-black/50
-                "
+                        w-full!
+                        overflow-visible!
+                        py-4!
+                    "
                 >
-
-                    <i className="fa-solid fa-chevron-left"></i>
-
-                </button>
-
-
-                {/* RIGHT BUTTON */}
-
-                <button
-
-                    onClick={nextSlide}
-
-                    className="
-                    md:hidden
-text-white
-                    absolute
-                    right-2
-                    z-50
-
-                    w-10
-                    h-10
-
-                    rounded-full
-
-                    border
-                    border-white/10
-
-                    bg-black/50
-                "
-                >
-
-                    <i className="fa-solid fa-chevron-right"></i>
-
-                </button>
-
-
-                {projectsData.map((project, index) => {
-
-                    const position =
-                        getPosition(index);
-
-                    return (
-
-                        <motion.div
+                    {projectsData.map((project) => (
+                        <SwiperSlide
                             key={project.id}
-
-                            animate={{
-                                ...positionStyles[position],
-                                pointerEvents:
-                                    position === "center"
-                                        ? "auto"
-                                        : "none",
-                            }}
-
-                            transition={{
-                                duration: 0.55,
-                                ease: "easeInOut",
-                            }}
-
                             className="
-    absolute
-
-    w-[min(78vw,760px)] md:w-[min(92vw,760px)]
-
-    will-change-transform
-"
-                            drag={window.innerWidth < 768 ? "x" : false}
-
-                            dragConstraints={{ left: 0, right: 0 }}
-
-                            onDragEnd={(e, info) => {
-
-                                if (info.offset.x < -50) {
-
-                                    nextSlide();
-
-                                }
-
-                                else if (info.offset.x > 50) {
-
-                                    prevSlide();
-
-                                }
-
-                            }}
+                                h-auto!
+                                w-[min(82vw,760px)]!
+                                md:w-[min(70vw,760px)]!
+                                lg:w-190!
+                            "
                         >
-
                             <ProjectCard
                                 title={project.title}
                                 image={project.image}
-                                link={project.link}
+                                onClick={() => {
+                                    setSelectedProject(project);
+                                }}
                             />
+                        </SwiperSlide>
+                    ))}
 
-                        </motion.div>
+                    {/* NAVIGATION + PAGINATION */}
+                    <div
+                        className="
+                            absolute
+                            -bottom-13.75
+                            left-1/2
+                            z-20
+                            flex
+                            -translate-x-1/2
+                            items-center
+                            justify-center
+                            gap-4
+                        "
+                    >
+                        {/* PREVIOUS */}
+                        <button
+                            className="
+                                projects-swiper-prev
+                                flex
+                                h-10
+                                w-10
+                                aspect-square
+                                items-center
+                                justify-center
+                                rounded-full
+                                border
+                                border-white/10
+                                bg-black/50
+                                text-white
+                                transition
+                                duration-200
+                                hover:bg-black/70
+                                active:scale-95
+                            "
+                            aria-label="Previous project"
+                        >
+                            <ChevronLeft
+                                size={20}
+                                strokeWidth={2}
+                            />
+                        </button>
 
-                    );
+                        {/* PAGINATION */}
+                        <div
+                            className="
+                                projects-swiper-pagination
+                                mx-6
+                                flex
+                                items-center
+                                justify-center
+                            "
+                        />
 
-                })}
+                        {/* NEXT */}
+                        <button
+                            className="
+                                projects-swiper-next
+                                flex
+                                h-10
+                                w-10
+                                aspect-square
+                                items-center
+                                justify-center
+                                rounded-full
+                                border
+                                border-white/10
+                                bg-black/50
+                                text-white
+                                transition
+                                duration-200
+                                hover:bg-black/70
+                                active:scale-95
+                            "
+                            aria-label="Next project"
+                        >
+                            <ChevronRight
+                                size={20}
+                                strokeWidth={2}
+                            />
+                        </button>
+                    </div>
+                </Swiper>
             </div>
         </div>
-
     );
-
 };
 
 export default ProjectsSlider;
+

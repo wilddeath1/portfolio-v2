@@ -1,40 +1,24 @@
-import React from "react";
 const ProjectCard = ({
     title,
     image,
-    link,
+    onClick,
 }) => {
-
     return (
-
-        <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
-
+        <div
+            onClick={onClick}
             className="
                 relative
-
-                block
-
                 w-full
-                h-105
-
+                aspect-video
                 overflow-hidden
-
                 rounded-3xl
-
                 border
                 border-white/10
-
                 bg-(--bg-primary)
-
                 shadow-2xl
             "
         >
-
             {/* IMAGE */}
-
             <img
                 src={image}
                 alt={title}
@@ -42,22 +26,17 @@ const ProjectCard = ({
                 className="
                     absolute
                     inset-0
-
-                    w-full
                     h-full
-
+                    w-full
                     object-cover
                 "
             />
 
-
             {/* DARK OVERLAY */}
-
             <div
                 className="
                     absolute
                     inset-0
-
                     bg-linear-to-t
                     from-black/80
                     via-black/20
@@ -65,44 +44,31 @@ const ProjectCard = ({
                 "
             />
 
-
             {/* TITLE */}
-
             <div
                 className="
                     absolute
                     bottom-0
                     left-0
-
-                    w-full
-
-                    p-8
-
                     z-10
+                    w-full
+                    p-8
                 "
             >
-
                 <h3
                     className="
+                        text-center
                         text-2xl
                         font-bold
-
                         text-white
-
-                        text-center
                     "
                 >
-
                     {title}
-
                 </h3>
-
             </div>
-
-        </a>
-
+        </div>
     );
-
 };
 
 export default ProjectCard;
+
