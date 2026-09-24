@@ -7,10 +7,10 @@ const projectsData = [
         link: "https://metal-break-94d.notion.site/AYUSH-TYAGI-33a2ef3f54c080b7ac9dec988c6a2dd4?p=33a2ef3f54c081fcbe82f19f694953fe&pm=c",
         mediaType: "image",
         media: [
-            "src/sections/projects/images/thumbnails/exposed.jpg",
-            "src/sections/projects/images/thumbnails/day8.jpg",
-            "src/sections/projects/images/thumbnails/kamla.jpg",
-            "src/sections/projects/images/thumbnails/profit-loss.jpg"
+            "/images/project-section/thumbnails/exposed.jpg",
+            "/images/project-section/thumbnails/day8.jpg",
+            "/images/project-section/thumbnails/kamla.jpg",
+            "/images/project-section/thumbnails/profit-loss.jpg"
         ]
     },
 
@@ -35,10 +35,10 @@ const projectsData = [
         link: "https://metal-break-94d.notion.site/AYUSH-TYAGI-33a2ef3f54c080b7ac9dec988c6a2dd4?p=33a2ef3f54c081ae8391f2a1f6d3f2b0&pm=c",
         mediaType: "image",
         media: [
-            "src/sections/projects/images/brand-visuals/sanctuary.jpg",
-            "src/sections/projects/images/brand-visuals/desert.jpg",
-            "src/sections/projects/images/brand-visuals/cave.jpg",
-            "src/sections/projects/images/brand-visuals/midnight.jpg"
+            "/images/project-section/brand-visuals/sanctuary.jpg",
+            "/images/project-section/brand-visuals/desert.jpg",
+            "/images/project-section/brand-visuals/cave.jpg",
+            "/images/project-section/brand-visuals/midnight.jpg"
         ]
     },
 
@@ -63,10 +63,10 @@ const projectsData = [
         link: "https://github.com/wilddeath1",
         mediaType: "image",
         media: [
-            "src/sections/projects/images/web-designs/pizza.png",
-            "src/sections/projects/images/web-designs/esports-scouting-concept.png",
-            "src/sections/projects/images/web-designs/watchfolio.png",
-            "src/sections/projects/images/web-designs/notes-app.png"
+            "/images/project-section/web-designs/pizza.png",
+            "/images/project-section/web-designs/esports-scouting-concept.png",
+            "/images/project-section/web-designs/watchfolio.png",
+            "/images/project-section/web-designs/notes-app.png"
         ]
     },
 ];
